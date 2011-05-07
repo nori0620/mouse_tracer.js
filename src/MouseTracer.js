@@ -27,8 +27,8 @@ var ns = com.nori0620.mouse_tracer;
         }
     };
 
-    /* --- History ---- */
-    var History = function(start_time){
+    /* --- TraceLog ---- */
+    var TraceLog = function(start_time){
         this.records    = [];
         this.start_time = start_time;
     };
@@ -48,11 +48,11 @@ var ns = com.nori0620.mouse_tracer;
         proto.dump  = function(){
             return this.records;
         };
-    }(History.prototype));
+    }(TraceLog.prototype));
 
     /* --- Replayer ---- */
-    var Replayer = function(history){
-        this.history  = history;
+    var Replayer = function(trace_log){
+        this.trace_log  = trace_log;
         this.FRAME_INTERVAL = 10;
         this.current_frame  = 1;
         this.canvas      = null;
@@ -75,7 +75,7 @@ var ns = com.nori0620.mouse_tracer;
         };
         proto.render_frame = function(){
             var ctx = this.canvas.getContext('2d');
-            var records = this.history.records;
+            var records = this.trace_log.records;
             var from = ( this.current_frame -1 )*this.FRAME_INTERVAL;
             var to   = this.current_frame*this.FRAME_INTERVAL;
             var renderer = new Renderer(ctx);
@@ -87,7 +87,6 @@ var ns = com.nori0620.mouse_tracer;
                     renderer.render( record );
                 }
                 this.render_record_count++;
-                //console.log( 'render', 'total:',this.render_record_count,'length:',records.length);
                 if( this.render_record_count > records.length ){
                     window.clearInterval( this.interval_id );
                     if( this.callback ){ this.callback() };
@@ -131,12 +130,12 @@ var ns = com.nori0620.mouse_tracer;
 
     /* --- Export --------- */
     (function(){
-        var history;
-        var recorder = function(e){ history.addRecord(e); };
+        var trace_log;
+        var recorder = function(e){ trace_log.addRecord(e); };
         var canvas;
         /* Main API */
         ns.record = function(callback){
-            history  = new History( Utils.current_time() );
+            trace_log  = new TraceLog( Utils.current_time() );
             document.body.addEventListener("mousemove",recorder, true );
             document.body.addEventListener("click", recorder, true);
             if( canvas ){ canvas.width = canvas.width + 1; canvas.display = "none"; }
@@ -146,11 +145,11 @@ var ns = com.nori0620.mouse_tracer;
             document.body.removeEventListener("mousemove", recorder, true);
             document.body.removeEventListener("click", recorder, true);
             if( callback ){ callback(); }
-            return history;
+            return trace_log;
         }
-        ns.replay = function(callback){
+        ns.replay = function(trace_log,callback){
             canvas = HtmlHeplers.overlayCanvas();
-            var replayer = new Replayer(history);
+            var replayer = new Replayer(trace_log);
             replayer.play( canvas, callback );
         };
         /* Control Panel */

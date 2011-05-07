@@ -35,7 +35,7 @@ var ns = com.nori0620.mouse_tracer_control_panel;
             this.stopButton.addEventListener('click',function(){
                 that.replayButton.disabled = false;
                 that.stopButton.disabled = true;
-                main_api.stop();
+                that.trace_log = main_api.stop();
             },true);
             this.stopButton.disabled = true;
             return this.stopButton;
@@ -46,7 +46,7 @@ var ns = com.nori0620.mouse_tracer_control_panel;
             this.replayButton.addEventListener('click',function(){
                 that.replayButton.disabled = true;
                 that.recordButton.disabled = true;
-                main_api.replay( function(){
+                main_api.replay( that.trace_log, function(){
                     that.recordButton.disabled = false;
                 });
             },true);
@@ -68,7 +68,6 @@ var ns = com.nori0620.mouse_tracer_control_panel;
             button.style.padding = 3  + "px";
             button.style.width   = 80  + "px";
             button.style.height  = 30  + "px";
-            console.log( button.style.cssText );
             elem.appendChild( button );
             return button;
         }
@@ -81,7 +80,7 @@ var ns = com.nori0620.mouse_tracer_control_panel;
 
 /* Example of bookmarklet */
 // <a href="javascript:( function(){
-//  var script_url_root = 'http://59.106.179.130:8083/mouse_tracer.js/';
+//  var script_url_root = 'http://your.domain/mouse_tracer.js/';
 //  var e1 = document.createElement('script');
 //  e1.setAttribute('language', 'JavaScript');
 //  e1.setAttribute( 'src', script_url_root + 'src/MouseTracer.js');

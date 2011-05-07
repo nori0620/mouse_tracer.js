@@ -1,0 +1,22 @@
+
+MouseTracer
+
+  マウスの軌跡を保存、再生します.
+
+  // 軌跡の保存の開始
+  com.nori0620.mouse_tracer.record();
+
+  // 軌跡の保存完了
+  var trace_log = com.nori0620.mouse_tracer.stop();
+
+  // 軌跡のリプレイ
+  com.nori0620.mouse_tracer.replay( trace_log );
+
+  // 使用方法
+  クライアント側でrecord&stopしてtrace_logをシリアライズしてサーバー側に送って、あとでreplay()して解析したりとか・・・できるのでしょうか。
+
+  // Sample
+  以下のURLに簡単なBookmarkletのサンプルを設置しています.
+  http://www.nori0620.me/static/intro_mouse_tracer.html
+
+
