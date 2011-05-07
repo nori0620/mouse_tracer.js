@@ -1,6 +1,6 @@
-var main_api = com.nori0620.mouse_tracer;
-com.nori0620.mouse_tracer_control_panel = {};
-var ns = com.nori0620.mouse_tracer_control_panel;
+var main_api = me.nori0620.mouse_tracer;
+me.nori0620.mouse_tracer_control_panel = {};
+var ns = me.nori0620.mouse_tracer_control_panel;
 
 /*global document window */
 (function(){
@@ -91,5 +91,5 @@ var ns = com.nori0620.mouse_tracer_control_panel;
 //  e2.setAttribute('src',script_url_root + 'sample/ControllPanel.js');
 //  document.body.appendChild(e2);
 //
-//  e2.onload = function(){ com.nori0620.mouse_tracer_control_panel.load_panel(); }
+//  e2.onload = function(){ me.nori0620.mouse_tracer_control_panel.load_panel(); }
 // })() ">bookmarklet</a>

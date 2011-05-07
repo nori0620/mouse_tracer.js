@@ -1,5 +1,5 @@
-var com ={}; com.nori0620 = {}; com.nori0620.mouse_tracer = {};
-var ns = com.nori0620.mouse_tracer;
+var me ={}; me.nori0620 = {}; me.nori0620.mouse_tracer = {};
+var ns = me.nori0620.mouse_tracer;
 
 /*global document window */
 (function(){
