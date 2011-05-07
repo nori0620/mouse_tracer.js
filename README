@@ -1,7 +1,6 @@
-
 MouseTracer
 
-  マウスの軌跡を保存、再生します.
+  マウスの軌跡を保存、再生します.　実用性は薄め.
 
   // 軌跡の保存の開始
   me.nori0620.mouse_tracer.record();
