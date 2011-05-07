@@ -1,3 +1,4 @@
+/*global me */
 var main_api = me.nori0620.mouse_tracer;
 me.nori0620.mouse_tracer_control_panel = {};
 var ns = me.nori0620.mouse_tracer_control_panel;
@@ -14,7 +15,6 @@ var ns = me.nori0620.mouse_tracer_control_panel;
             this.box.style.top        = 0;
             this.box.style.right      = 0;
             this.box.style.zIndex     = 9999999;
-            var that = this;
             document.body.appendChild(this.box);
             return this.box;
         },

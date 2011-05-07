@@ -50,6 +50,38 @@ var ns = me.nori0620.mouse_tracer;
         };
     }(TraceLog.prototype));
 
+    /* --- Renderer ---- */
+    var Renderer = function(context){
+        this.context = context;
+    };
+    (function(proto){
+        proto.render = function(record){
+            if( record.type === 'mousemove' ){
+                this._render_mousemove(record);
+            }
+            else if( record.type === 'click' ){
+                this._render_click(record);
+            }
+        };
+        proto._render_mousemove = function(record){
+            this.context.beginPath();
+            this.context.strokeStyle = "rgba(0,0,255,1)";
+            this.context.fillStyle   = "rgba(0,0,255,0.2)";
+            this.context.arc(record.x , record.y, 5, Math.PI*2, false);
+            this.context.stroke();
+            this.context.fill();
+        };
+        proto._render_click = function(record){
+            this.context.beginPath();
+            this.context.strokeStyle = "rgba(0,0,255,1)";
+            this.context.fillStyle   = "rgba(0,0,255,0.2)";
+            this.context.arc(record.x , record.y, 30, Math.PI*2, false);
+            this.context.stroke();
+            this.context.fill();
+        };
+    }(Renderer.prototype));
+
+
     /* --- Replayer ---- */
     var Replayer = function(trace_log){
         this.trace_log  = trace_log;
@@ -89,44 +121,13 @@ var ns = me.nori0620.mouse_tracer;
                 this.render_record_count++;
                 if( this.render_record_count > records.length ){
                     window.clearInterval( this.interval_id );
-                    if( this.callback ){ this.callback() };
+                    if( this.callback ){ this.callback(); }
                     break;
                 }
             }
             this.current_frame++;
         };
     }(Replayer.prototype));
-
-    /* --- Renderer ---- */
-    var Renderer = function(context){
-        this.context = context;
-    };
-    (function(proto){
-        proto.render = function(record){
-            if( record.type == 'mousemove' ){
-                this._render_mousemove(record);
-            }
-            else if( record.type == 'click' ){
-                this._render_click(record);
-            }
-        };
-        proto._render_mousemove = function(record){
-            this.context.beginPath();
-            this.context.strokeStyle = "rgba(0,0,255,1)";
-            this.context.fillStyle   = "rgba(0,0,255,0.2)";
-            this.context.arc(record.x , record.y, 5, Math.PI*2, false);
-            this.context.stroke();
-            this.context.fill();
-        }
-        proto._render_click = function(record){
-            this.context.beginPath();
-            this.context.strokeStyle = "rgba(0,0,255,1)";
-            this.context.fillStyle   = "rgba(0,0,255,0.2)";
-            this.context.arc(record.x , record.y, 30, Math.PI*2, false);
-            this.context.stroke();
-            this.context.fill();
-        }
-    }(Renderer.prototype));
 
     /* --- Export --------- */
     (function(){
@@ -146,7 +147,7 @@ var ns = me.nori0620.mouse_tracer;
             document.body.removeEventListener("click", recorder, true);
             if( callback ){ callback(); }
             return trace_log;
-        }
+        };
         ns.replay = function(trace_log,callback){
             canvas = HtmlHeplers.overlayCanvas();
             var replayer = new Replayer(trace_log);
